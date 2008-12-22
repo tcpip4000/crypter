@@ -1,1 +1,11 @@
 This program reads an encrypted file and redirects the response to standard output
+
+Requeriments:
+	libgpg-error
+	libgcrypt
+
+Bibliography:
+	doc/gcrypt.pdf
+	doc/fips-fsm.pdf
+	doc/libgcrypt-modules.pdf
+
