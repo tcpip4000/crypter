@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <gcrypt.h>
 
-#define MAX_DATA_LEN 100
+#define MAX_DATA_LEN 16
 
 int main()
 {
     const char* libgcrypt_version = gcry_check_version(GCRYPT_VERSION);
+    gcry_error_t err = 0;
     // libgcrypt initialization
     if (!libgcrypt_version) {
         fputs ("libgcrypt version mismatch\n", stderr);
@@ -29,22 +30,24 @@ int main()
     //gcry_cipher_setiv
 
     //gcry_error_t gcry_cipher_setkey (gcry cipher hd t h, const void *k, size t l )
-    //unsigned char *out;
-    char out[MAX_DATA_LEN];
-    char *in = "my secret data";
-    size_t outsize = sizeof(out);
-    size_t insize = sizeof(in);
-    gcry_cipher_encrypt(hd, out, outsize, in, insize);
+    unsigned char out[MAX_DATA_LEN], in[MAX_DATA_LEN], plain[MAX_DATA_LEN];
+    memcpy(plain, "foobar42FOOBAR17", 16);
+    err = gcry_cipher_encrypt(hd, out, MAX_DATA_LEN, plain, MAX_DATA_LEN);
 
-    printf("entrada: %s\n", in);
+    printf("entrada: %s\n", plain);
     printf("salida: %s\n", out);
-//gcry_error_t gcry_cipher_encrypt (gcry cipher hd t h, unsigned
-//        char *out, size t outsize, const unsigned char *in, size t inlen )
-//gcry_error_t gcry_cipher_decrypt (gcry cipher hd t h, unsigned
-//        char *out, size t outsize, const unsigned char *in, size t inlen )
 
-    //printf("hola mundo\n");
+    gcry_cipher_reset (hd);
 
+    err = gcry_cipher_decrypt(hd, in, MAX_DATA_LEN, out, MAX_DATA_LEN);
+
+    printf("entrada: %s\n", out);
+    printf("salida: %s\n", in);
+
+    //gcry_error_t gcry_cipher_encrypt (gcry cipher hd t h, unsigned
+    //        char *out, size t outsize, const unsigned char *in, size t inlen )
+    //gcry_error_t gcry_cipher_decrypt (gcry cipher hd t h, unsigned
+    //        char *out, size t outsize, const unsigned char *in, size t inlen )
 
     // Release handler
     gcry_cipher_close(hd);
