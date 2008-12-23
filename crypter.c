@@ -2,6 +2,7 @@
 #include <gcrypt.h>
 
 #define MAX_DATA_LEN 16
+#define MAX_REC_LEN 1024
 
 int printCharArray(unsigned char *, int);
 
@@ -12,10 +13,25 @@ int main()
     char key[32];
     int keylen;
     unsigned char out[MAX_DATA_LEN], in[MAX_DATA_LEN], plain[MAX_DATA_LEN];
+    char tmp[MAX_REC_LEN];
 
     memcpy(plain, "foobar42FOOBAR17", 16);
     memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
+    FILE *data_file;
+    char filename[] = "modal.erc";
 
+    if ((data_file = fopen(filename, "r")) == NULL) {
+        fprintf(stderr, "Cannot open %s\n", filename);
+        exit(2);
+    }
+
+    //fgets(tmp, MAX_REC_LEN, data_file);  
+    // printCharArray(tmp, MAX_REC_LEN);
+
+    int l = fread(tmp, MAX_REC_LEN, 1, data_file);
+    printf("length read %d\n", l);
+    printCharArray(tmp, MAX_REC_LEN);
+    
     // libgcrypt initialization
     if (!libgcrypt_version) {
         fputs ("libgcrypt version mismatch\n", stderr);
@@ -65,6 +81,8 @@ int main()
     // Release handler
     gcry_cipher_close(hd);
 
+    fclose(data_file);
+
     return 0;
 	
 }
@@ -72,8 +90,11 @@ int main()
 int printCharArray(unsigned char *array, int array_length)
 {
     int i;
+    //for (i=0; i < array_length && array[i] != '\n'; i++) {
     for (i=0; i < array_length; i++) {
         printf("%c", array[i]);
+        //if (array[i] == NULL)
+        //    printf("Null encontrado");
     }
     printf("\n");
     return 0;
