@@ -9,3 +9,5 @@ Bibliography:
 	doc/fips-fsm.pdf
 	doc/libgcrypt-modules.pdf
 
+It is also important to read the examples located in the libgcrypt tests folder (basic.c function check_one_cipher)
+
