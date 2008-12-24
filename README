@@ -1,13 +1,16 @@
 This program reads an encrypted file and redirects the response to standard output
 
 Requeriments:
-	libgpg-error
-	libgcrypt
+    libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
+	libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
 
 Bibliography:
 	doc/gcrypt.pdf
 	doc/fips-fsm.pdf
 	doc/libgcrypt-modules.pdf
+    It is also important to read the examples located in the libgcrypt tests folder (basic.c function check_one_cipher)
 
-It is also important to read the examples located in the libgcrypt tests folder (basic.c function check_one_cipher)
+Internet resources:
+    C99 standard: http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf
+
 
