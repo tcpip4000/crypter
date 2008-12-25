@@ -3,7 +3,7 @@
 #include <gcrypt.h>
 
 #define MAX_DATA_LEN 16
-#define MAX_REC_LEN 1024
+#define MAX_REC_LEN 17
 
 void printCharArray(unsigned char *, int);
 
@@ -16,14 +16,25 @@ int main()
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
 
-    FILE *data_file;
+    FILE *data_file, *out_file; 
+    FILE *encrypted_file;
     char filename[] = "modal.erc";
+    char filename2[] = "modal_out.erc";
+    char filename3[] = "modal_enc.erc";
 
     memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
 
     // check file existence
     if ((data_file = fopen(filename, "r")) == NULL) {
         fprintf(stderr, "Cannot open %s\n", filename);
+        exit(1);
+    }
+    if ((encrypted_file = fopen(filename3, "r")) == NULL) {
+        fprintf(stderr, "Cannot open %s\n", filename3);
+        exit(1);
+    }
+    if ((out_file = fopen(filename2, "w+")) == NULL) {
+        fprintf(stderr, "Cannot open %s\n", filename2);
         exit(1);
     }
 
@@ -45,28 +56,54 @@ int main()
     err = gcry_cipher_setkey(hd, key, keylen);
     //gcry_cipher_setiv
     
-    while (fgets(plain, MAX_REC_LEN, data_file) != NULL) {
+    while (fgets(plain, MAX_REC_LEN, encrypted_file) != NULL) {
     
-        err = gcry_cipher_encrypt(hd, out, MAX_DATA_LEN, plain, MAX_DATA_LEN);
+        err = gcry_cipher_decrypt(hd, in, MAX_DATA_LEN, plain, MAX_DATA_LEN);
         gcry_cipher_reset(hd);
 
-        printf("entrada: ");
-        printCharArray(plain, MAX_DATA_LEN);
-        printf("salida:  ");
-        printCharArray(out, MAX_DATA_LEN);
-
-        err = gcry_cipher_decrypt(hd, in, MAX_DATA_LEN, out, MAX_DATA_LEN);
-        gcry_cipher_reset(hd);
-
-        printf("entrada: ");
-        printCharArray(out, MAX_DATA_LEN);
+        //printf("entrada: ");
+        //printCharArray(plain, MAX_DATA_LEN);
         printf("salida:  ");
         printCharArray(in, MAX_DATA_LEN);
     }
 
+    //while (fgets(plain, MAX_REC_LEN, data_file) != NULL) {
+    //
+    //    err = gcry_cipher_encrypt(hd, out, MAX_DATA_LEN, plain, MAX_DATA_LEN);
+    //    //fputs(out, out_file);
+    //    fwrite(out,MAX_DATA_LEN,1,out_file);
+    //    gcry_cipher_reset(hd);
+
+    //    //printf("entrada: ");
+    //    //printCharArray(plain, MAX_DATA_LEN);
+    //    //printf("salida:  ");
+    //    //printCharArray(out, MAX_DATA_LEN);
+    //}
+
+    //while (fgets(plain, MAX_REC_LEN, data_file) != NULL) {
+    //
+    //    err = gcry_cipher_encrypt(hd, out, MAX_DATA_LEN, plain, MAX_DATA_LEN);
+    //    gcry_cipher_reset(hd);
+
+    //    printf("entrada: ");
+    //    printCharArray(plain, MAX_DATA_LEN);
+    //    printf("salida:  ");
+    //    printCharArray(out, MAX_DATA_LEN);
+
+    //    err = gcry_cipher_decrypt(hd, in, MAX_DATA_LEN, out, MAX_DATA_LEN);
+    //    gcry_cipher_reset(hd);
+
+    //    printf("entrada: ");
+    //    printCharArray(out, MAX_DATA_LEN);
+    //    printf("salida:  ");
+    //    printCharArray(in, MAX_DATA_LEN);
+    //}
+
     // Release file and handler
     gcry_cipher_close(hd);
     fclose(data_file);
+    fclose(out_file);
+    fclose(encrypted_file);
 
     return 0;
 }
