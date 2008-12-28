@@ -13,10 +13,10 @@
 
 #define MAX_DATA_LEN 16
 
-void printCharArray(unsigned char *, int);
-void decryptFile(gcry_cipher_hd_t , char *);
-void encryptFileToFile(gcry_cipher_hd_t, char *, char *);
-void encryptDecryptTest(gcry_cipher_hd_t, char *);
+void printCharArray(unsigned char *array, int array_length);
+void decryptFile(gcry_cipher_hd_t handler, char *filename);
+void encryptFileToFile(gcry_cipher_hd_t handler, char *plain_filename, char *encrypted_filename);
+void encryptDecryptTest(gcry_cipher_hd_t handler, char *plain_filename);
 
 #endif /* CRYPTER_HEADER_H */
 
