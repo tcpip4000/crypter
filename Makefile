@@ -22,7 +22,7 @@ crypter.o: crypter/crypter.c
 clean:
 	rm -f *.o 
 	rm -f *~ 
-	rm -f crypter/*.o
+	rm -f crypter/*.[oa]
 	rm -f crypter/*~
 	rm modaler
 
