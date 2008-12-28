@@ -1,10 +1,14 @@
+CC=gcc 
+CFLAGS=-Wall
+
 crypter: crypter.o
-	gcc -o crypter crypter.o -L/usr/lib64 -lgcrypt -lgpg-error
+	$(CC) crypter.o -L/usr/lib64 -lgcrypt -lgpg-error -o crypter
 
 crypter.o: crypter.c
-	gcc -Wall -I/usr/include -c crypter.c
+	$(CC) $(CFLAGS) -I/usr/include -c crypter.c
 
 clean:
 	rm -f *.o 
 	rm -f *~
+	rm crypter
 

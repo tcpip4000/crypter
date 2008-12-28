@@ -1,6 +1,8 @@
 README
 
-This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt).
+Author: Juan P Daza P
+Year: 2008
+Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt).
 
 Requeriments:
     libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
@@ -10,7 +12,7 @@ Bibliography:
     doc/gcrypt.pdf
     doc/fips-fsm.pdf
     doc/libgcrypt-modules.pdf
-    It is also important to read the examples located in the libgcrypt tests folder (basic.c function check_one_cipher)
+    It is also important to read the examples located in the libgcrypt tests folder (see function check_one_cipher in basic.c file)
 
 Internet resources:
     C99 standard: http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf

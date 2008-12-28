@@ -1,3 +1,8 @@
+/* crypter.c
+ *
+ * Copyright (C) 2008,2009
+ * ER Technology
+ */
 
 #include <stdio.h>
 #include <gcrypt.h>
