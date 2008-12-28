@@ -15,9 +15,9 @@ int main()
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
 
-    char filename[] = "modal.erc";
-    char filename2[] = "modal_out.erc";
-    char filename3[] = "modal_enc.erc";
+    char filename[] = "files/modal.erc";
+    char filename2[] = "files/modal_out.erc";
+    char filename3[] = "files/modal_enc.erc";
 
     memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
 
@@ -44,8 +44,8 @@ int main()
     //gcry_cipher_setiv
 
     //decryptFile(hd, filename3);
-    //encryptFileToFile(hd, filename, filename2);
-    encryptDecryptTest(hd, filename);
+    encryptFileToFile(hd, filename, filename2);
+    //encryptDecryptTest(hd, filename);
 
     // Release file and handler
     gcry_cipher_close(hd);
