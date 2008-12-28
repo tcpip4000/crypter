@@ -1,5 +1,5 @@
 CC=gcc 
-CFLAGS=-Wall
+CFLAGS=-Wall -std=c99 -O2
 
 crypter: crypter.o
 	$(CC) crypter.o -L/usr/lib64 -lgcrypt -lgpg-error -o crypter
