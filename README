@@ -5,9 +5,17 @@ Author: Juan P Daza P
 Year: 2008
 Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt) and adds the possibility to write the manipulated data on files or standard output.
 
+Crypter is a static library that tries to fill the gap in the libgcrypt library adding some simple byte manipulation, allowing to print the data to standard output or write it to an specified output file.  Also is posible to read data from a encrypted file and then write the plain data to another file.
+
+As a static library the makefile generates a libcrypter.a file located in the libcrypter folder to easily link to other projects.
+
 Requeriments:
     libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
     libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
+
+Build:
+    To build all: make
+    To build only the library: make libcrypter.a
 
 Bibliography:
     doc/gcrypt.pdf
