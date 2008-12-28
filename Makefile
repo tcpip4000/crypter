@@ -2,6 +2,8 @@
 # Copyright (C) 2008 ER Technology
 # Juan P Daza P
 
+# TODO: migrate this file to a more generic form or maybe use automake
+
 CC=gcc
 CFLAGS=-Wall -std=c99 -O2
 

@@ -2,7 +2,7 @@ README
 
 Author: Juan P Daza P
 Year: 2008
-Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt).
+Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt) and adds the possibility to write the manipulated data on files or standard output.
 
 Requeriments:
     libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
