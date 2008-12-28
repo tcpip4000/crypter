@@ -1,6 +1,7 @@
 *.[ao]
 *~
-crypter
+modaler
 *swp
 modal_out.erc
 src/libgcrypt-1.4.3
+

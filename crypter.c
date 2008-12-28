@@ -5,6 +5,8 @@
  *
  */
 
+#include "crypter.h"
+
 void printCharArray(unsigned char *array, int array_length)
 {
     int i;
