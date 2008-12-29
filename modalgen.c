@@ -1,4 +1,4 @@
-/* modaler.c
+/* modalgen.c
  *
  * Copyright (C) 2008 ER Technology
  * Juan P Daza P
@@ -11,13 +11,10 @@ int main(int argc, const char *argv[])
 {
     const char *libgcrypt_version = gcry_check_version(GCRYPT_VERSION);
     gcry_error_t err = 0;
-    //char key[32];
     char *key;
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
-    char *filename, *filename2, *filename3;
-
-    //memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
+    char *filename, *filename2;
     
     if (argc != 4) {
         printf("Wrong parameter quantity\n");
@@ -27,7 +24,6 @@ int main(int argc, const char *argv[])
     filename = argv[1];
     filename2 = argv[2];
     key = argv[3];
-    //filename3 = argv[3];
 
     // cipher initialization
     if (!libgcrypt_version) {
@@ -51,10 +47,7 @@ int main(int argc, const char *argv[])
     }
     //gcry_cipher_setiv
 
-    //decryptFile(hd, filename);
-    //encryptDecryptTest(hd, filename);
-    //encryptFileToFile(hd, filename, filename2);
-    decryptFileToFile(hd, filename, filename2);
+    encryptFileToFile(hd, filename, filename2);
 
     // Release handler
     gcry_cipher_close(hd);

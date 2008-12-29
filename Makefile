@@ -7,11 +7,17 @@
 CC=gcc
 CFLAGS=-Wall -std=c99 -O2
 
+modalgen: modalgen.o libcrypter.a modaler
+	$(CC) modalgen.o -L./libcrypter -L/usr/lib -lgcrypt -lgpg-error -lcrypter -o modalgen
+
 modaler: modaler.o libcrypter.a
 	$(CC) modaler.o -L./libcrypter -L/usr/lib -lgcrypt -lgpg-error -lcrypter -o modaler
 
 libcrypter.a: crypter.o
 	ar cr libcrypter/libcrypter.a libcrypter/crypter.o
+
+modalgen.o: modalgen.c
+	$(CC) $(CFLAGS) -I/usr/include -I./libcrypter -c modalgen.c
 
 modaler.o: modaler.c
 	$(CC) $(CFLAGS) -I/usr/include -Ilibcrypter -c modaler.c
@@ -24,5 +30,5 @@ clean:
 	rm -f *~ 
 	rm -f libcrypter/*.[oa]
 	rm -f libcrypter/*~
-	rm modaler
+	rm modaler modalgen
 
