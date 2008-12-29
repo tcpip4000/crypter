@@ -7,23 +7,40 @@
 
 #include "crypter.h"
 
-int main()
+int main(int argc, const char *argv[])
 {
     const char *libgcrypt_version = gcry_check_version(GCRYPT_VERSION);
     gcry_error_t err = 0;
     char key[32];
+    //char *key;
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
 
-    char filename[] = "files/modal.erc";
-    char filename2[] = "files/modal_out.erc";
-    char filename3[] = "files/modal_enc.erc";
-
+    char *filename, *filename2, *filename3;
+    //char output_filename[] = argv[2];
+    //char filename[] = "files/modal.erc";
+    //char filename2[] = "files/modal_out.erc";
+    //char filename3[] = "files/modal_enc.erc";
     memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
+    
+    if (argc != 4) {
+        printf("Wrong parameter quantity\n");
+        exit(1);
+    }
+
+    filename = argv[1];
+    filename2 = argv[2];
+    filename3 = argv[3];
+    //key = argv[1];
+    //int i;
+    //for (i = 0; i < argc; i++) {
+    //    printf( "arg %d: %s\n", i, argv[i] );
+    //}
+
 
     // cipher initialization
     if (!libgcrypt_version) {
-        fputs ("libgcrypt version mismatch\n", stderr);
+        fputs ("libgcrypt version mismatch or not installed\n", stderr);
         exit (2);
     } else {
         printf("Using libgcrypt version: %s\n", libgcrypt_version);
@@ -43,9 +60,10 @@ int main()
     }
     //gcry_cipher_setiv
 
-    //decryptFile(hd, filename3);
+    //decryptFile(hd, filename);
+    encryptDecryptTest(hd, filename);
     encryptFileToFile(hd, filename, filename2);
-    //encryptDecryptTest(hd, filename);
+    decryptFileToFile(hd, filename2, filename3);
 
     // Release file and handler
     gcry_cipher_close(hd);

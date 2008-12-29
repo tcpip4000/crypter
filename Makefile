@@ -8,7 +8,7 @@ CC=gcc
 CFLAGS=-Wall -std=c99 -O2
 
 modaler: modaler.o libcrypter.a
-	$(CC) modaler.o -L./libcrypter -L/usr/lib64 -lgcrypt -lgpg-error -lcrypter -o modaler
+	$(CC) modaler.o -L./libcrypter -L/usr/lib -lgcrypt -lgpg-error -lcrypter -o modaler
 
 libcrypter.a: crypter.o
 	ar cr libcrypter/libcrypter.a libcrypter/crypter.o

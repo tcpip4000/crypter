@@ -9,7 +9,7 @@ Crypter is a static library that tries to fill the gap in the libgcrypt library 
 
 As a static library the makefile generates a libcrypter.a file located in the libcrypter folder to easily link to other projects.
 
-Requeriments:
+Prerequisites:
     libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
     libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
 

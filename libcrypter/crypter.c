@@ -35,12 +35,54 @@ void decryptFile(gcry_cipher_hd_t hd, char *filename)
         }
         gcry_cipher_reset(hd);
 
-        //printf("entrada: ");
-        //printCharArray(plain, MAX_DATA_LEN);
+        printf("entrada: ");
+        printCharArray(encrypted_data, MAX_DATA_LEN);
         printf("salida:  ");
         printCharArray(plain_data, MAX_DATA_LEN);
     }
 
+    fclose(encrypted_file);
+}
+
+void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plain_filename)
+{
+    FILE *plain_file, *encrypted_file;
+    unsigned char encrypted_data[MAX_DATA_LEN+1], plain_data[MAX_DATA_LEN+1];
+    gcry_error_t err = 0;
+    size_t elements_written;
+    int blocks_to_write = 1;
+
+    if ((plain_file = fopen(plain_filename, "w+")) == NULL) {
+        fprintf(stderr, "Cannot open %s\n", plain_filename);
+        exit(1);
+    }
+
+    if ((encrypted_file = fopen(encrypted_filename, "r")) == NULL) {
+        fprintf(stderr, "Cannot open %s\n", encrypted_filename);
+        exit(1);
+    }
+
+    while (fgets((char *) encrypted_data, MAX_DATA_LEN+1, encrypted_file) != NULL) {
+        err = gcry_cipher_decrypt(hd, plain_data, MAX_DATA_LEN, encrypted_data, MAX_DATA_LEN);
+        if (err) {
+            printf("grcy_cipher_decrypt failed: %s\n", gpg_strerror(err));
+            exit(2);
+        }
+        elements_written = fwrite(plain_data, MAX_DATA_LEN, blocks_to_write, plain_file);
+        if (elements_written < blocks_to_write) {
+            printf("Tried to write %d blocks but written %zu bytes\n", blocks_to_write, elements_written);
+            exit(3);
+        }
+        fflush(plain_file);
+        gcry_cipher_reset(hd);
+
+        //printf("entrada: ");
+        //printCharArray(encrypted_data, MAX_DATA_LEN);
+        //printf("salida:  ");
+        //printCharArray(plain_data, MAX_DATA_LEN);
+    }
+
+    fclose(plain_file);
     fclose(encrypted_file);
 }
 
@@ -62,7 +104,7 @@ void encryptFileToFile(gcry_cipher_hd_t hd, char *plain_filename, char *encrypte
         exit(1);
     }
 
-    while (fgets((char *) plain_data, MAX_DATA_LEN, plain_file) != NULL) {
+    while (fgets( plain_data, MAX_DATA_LEN, plain_file) != NULL) {
     
         err = gcry_cipher_encrypt(hd, encrypted_data, MAX_DATA_LEN, plain_data, MAX_DATA_LEN);
         if (err) {
@@ -75,12 +117,20 @@ void encryptFileToFile(gcry_cipher_hd_t hd, char *plain_filename, char *encrypte
             printf("Tried to write %d blocks but written %zu bytes\n", blocks_to_write, elements_written);
             exit(3);
         }
+        fflush(encrypted_file);
         gcry_cipher_reset(hd);
+        //printf("entrada: ");
+        //printCharArray(plain_data, MAX_DATA_LEN);
+        //printf("salida:  ");
+        //printCharArray(encrypted_data, MAX_DATA_LEN);
+
+        //err = gcry_cipher_decrypt(hd, plain_data, MAX_DATA_LEN, encrypted_data, MAX_DATA_LEN);
+        //gcry_cipher_reset(hd);
 
         //printf("entrada: ");
-        //printCharArray(plain, MAX_DATA_LEN);
+        //printCharArray(encrypted_data, MAX_DATA_LEN);
         //printf("salida:  ");
-        //printCharArray(out, MAX_DATA_LEN);
+        //printCharArray(plain_data, MAX_DATA_LEN);
     }
 
     fclose(encrypted_file);
