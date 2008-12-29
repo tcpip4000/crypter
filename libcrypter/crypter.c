@@ -169,6 +169,6 @@ void encryptDecryptTest(gcry_cipher_hd_t hd, char *plain_filename)
 
 void fillCharVectorWithSpaces(unsigned char vector[], int len) 
 {
-        for (int i=0; i < len; i++)
-            vector[i] = ' ';
+    for (int i=0; i < len; i++)
+        vector[i] = ' ';
 }

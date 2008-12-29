@@ -11,8 +11,8 @@ int main(int argc, const char *argv[])
 {
     const char *libgcrypt_version = gcry_check_version(GCRYPT_VERSION);
     gcry_error_t err = 0;
-    char key[32];
-    //char *key;
+    //char key[32];
+    char *key;
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
 
@@ -21,9 +21,9 @@ int main(int argc, const char *argv[])
     //char filename[] = "files/modal.erc";
     //char filename2[] = "files/modal_out.erc";
     //char filename3[] = "files/modal_enc.erc";
-    memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
+    //memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
     
-    if (argc != 4) {
+    if (argc != 5) {
         printf("Wrong parameter quantity\n");
         exit(1);
     }
@@ -31,12 +31,7 @@ int main(int argc, const char *argv[])
     filename = argv[1];
     filename2 = argv[2];
     filename3 = argv[3];
-    //key = argv[1];
-    //int i;
-    //for (i = 0; i < argc; i++) {
-    //    printf( "arg %d: %s\n", i, argv[i] );
-    //}
-
+    key = argv[4];
 
     // cipher initialization
     if (!libgcrypt_version) {
@@ -61,7 +56,7 @@ int main(int argc, const char *argv[])
     //gcry_cipher_setiv
 
     //decryptFile(hd, filename);
-    encryptDecryptTest(hd, filename);
+    //encryptDecryptTest(hd, filename);
     encryptFileToFile(hd, filename, filename2);
     decryptFileToFile(hd, filename2, filename3);
 
