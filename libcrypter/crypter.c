@@ -27,7 +27,7 @@ void decryptFile(gcry_cipher_hd_t hd, char *filename)
         exit(1);
     }
 
-    while (fgets((char *) encrypted_data, MAX_DATA_LEN, encrypted_file) != NULL) {
+    while (fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file) != NULL) {
         err = gcry_cipher_decrypt(hd, plain_data, MAX_DATA_LEN, encrypted_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_decrypt failed: %s\n", gpg_strerror(err));
@@ -47,7 +47,7 @@ void decryptFile(gcry_cipher_hd_t hd, char *filename)
 void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plain_filename)
 {
     FILE *plain_file, *encrypted_file;
-    unsigned char encrypted_data[MAX_DATA_LEN+1], plain_data[MAX_DATA_LEN+1];
+    unsigned char encrypted_data[MAX_DATA_LEN], plain_data[MAX_DATA_LEN];
     gcry_error_t err = 0;
     size_t elements_written;
     int blocks_to_write = 1;
@@ -62,7 +62,7 @@ void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plai
         exit(1);
     }
 
-    while (fgets((char *) encrypted_data, MAX_DATA_LEN+1, encrypted_file) != NULL) {
+    while (fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file) != NULL) {
         err = gcry_cipher_decrypt(hd, plain_data, MAX_DATA_LEN, encrypted_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_decrypt failed: %s\n", gpg_strerror(err));
@@ -104,8 +104,8 @@ void encryptFileToFile(gcry_cipher_hd_t hd, char *plain_filename, char *encrypte
         exit(1);
     }
 
-    while (fgets( plain_data, MAX_DATA_LEN, plain_file) != NULL) {
-    
+    while (fread(plain_data, MAX_DATA_LEN, 1, plain_file) != NULL) {
+
         err = gcry_cipher_encrypt(hd, encrypted_data, MAX_DATA_LEN, plain_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_encrypt failed: %s\n", gpg_strerror(err));
@@ -148,7 +148,7 @@ void encryptDecryptTest(gcry_cipher_hd_t hd, char *plain_filename)
         exit(1);
     }
 
-    while (fgets((char *) plain_data, MAX_DATA_LEN, plain_file) != NULL) {
+    while (fread(plain_data, MAX_DATA_LEN, 1, plain_file) != NULL) {
     
         err = gcry_cipher_encrypt(hd, encrypted_data, MAX_DATA_LEN, plain_data, MAX_DATA_LEN);
         if (err) {
