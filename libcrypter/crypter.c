@@ -27,7 +27,8 @@ void decryptFile(gcry_cipher_hd_t hd, char *filename)
         exit(1);
     }
 
-    while (fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file) != NULL) {
+    fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file);
+    while (!feof(encrypted_file) && !ferror(encrypted_file)) {
         err = gcry_cipher_decrypt(hd, plain_data, MAX_DATA_LEN, encrypted_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_decrypt failed: %s\n", gpg_strerror(err));
@@ -39,6 +40,7 @@ void decryptFile(gcry_cipher_hd_t hd, char *filename)
         printCharArray(encrypted_data, MAX_DATA_LEN);
         printf("salida:  ");
         printCharArray(plain_data, MAX_DATA_LEN);
+        fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file);
     }
 
     fclose(encrypted_file);
@@ -102,8 +104,8 @@ void encryptFileToFile(gcry_cipher_hd_t hd, char *plain_filename, char *encrypte
     }
 
     while (!feof(plain_file) && !ferror(plain_file)) { 
-    //while (fread(plain_data, MAX_DATA_LEN, 1, plain_file) != NULL) {
-        memcpy(plain_data, "                ", MAX_DATA_LEN);
+        //memcpy(plain_data, "                                ", MAX_DATA_LEN);
+        fillCharVectorWithSpaces(plain_data, MAX_DATA_LEN);
         fread(plain_data, MAX_DATA_LEN, 1, plain_file);
         err = gcry_cipher_encrypt(hd, encrypted_data, MAX_DATA_LEN, plain_data, MAX_DATA_LEN);
         if (err) {
@@ -129,6 +131,7 @@ void encryptDecryptTest(gcry_cipher_hd_t hd, char *plain_filename)
     FILE *plain_file;
     unsigned char encrypted_data[MAX_DATA_LEN], plain_data[MAX_DATA_LEN];
     gcry_error_t err = 0;
+    int blocks_to_read = 1;
 
     if ((plain_file = fopen(plain_filename, "r")) == NULL) {
         fprintf(stderr, "Cannot open %s\n", plain_filename);
@@ -136,8 +139,10 @@ void encryptDecryptTest(gcry_cipher_hd_t hd, char *plain_filename)
     }
 
     while (!feof(plain_file) && !ferror(plain_file)) {
-        memcpy(plain_data, "                ", MAX_DATA_LEN);
-        fread(plain_data, MAX_DATA_LEN, 1, plain_file); 
+        //memcpy(plain_data, "                                ", MAX_DATA_LEN);
+        fillCharVectorWithSpaces(plain_data, MAX_DATA_LEN);
+        fread(plain_data, MAX_DATA_LEN, blocks_to_read, plain_file); 
+
         err = gcry_cipher_encrypt(hd, encrypted_data, MAX_DATA_LEN, plain_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_encrypt failed: %s\n", gpg_strerror(err));
@@ -162,3 +167,8 @@ void encryptDecryptTest(gcry_cipher_hd_t hd, char *plain_filename)
     fclose(plain_file);
 }
 
+void fillCharVectorWithSpaces(unsigned char vector[], int len) 
+{
+        for (int i=0; i < len; i++)
+            vector[i] = ' ';
+}

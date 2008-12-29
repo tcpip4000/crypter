@@ -11,13 +11,14 @@
 #include <stdio.h>
 #include <gcrypt.h>
 
-#define MAX_DATA_LEN 16
+#define MAX_DATA_LEN 32
 
 void printCharArray(unsigned char *array, int array_length);
 void decryptFile(gcry_cipher_hd_t handler, char *filename);
 void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plain_filename);
 void encryptFileToFile(gcry_cipher_hd_t handler, char *plain_filename, char *encrypted_filename);
 void encryptDecryptTest(gcry_cipher_hd_t handler, char *plain_filename);
+void fillCharVectorWithSpaces(unsigned char vector[], int len); 
 
 #endif /* CRYPTER_HEADER_H */
 
