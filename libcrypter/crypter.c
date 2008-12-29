@@ -62,7 +62,8 @@ void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plai
         exit(1);
     }
 
-    while (fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file) != NULL) {
+    fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file);
+    while (!feof(encrypted_file) && !ferror(encrypted_file)) {
         err = gcry_cipher_decrypt(hd, plain_data, MAX_DATA_LEN, encrypted_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_decrypt failed: %s\n", gpg_strerror(err));
@@ -73,15 +74,11 @@ void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plai
             printf("Tried to write %d blocks but written %zu bytes\n", blocks_to_write, elements_written);
             exit(3);
         }
-        fflush(plain_file);
         gcry_cipher_reset(hd);
-
-        //printf("entrada: ");
-        //printCharArray(encrypted_data, MAX_DATA_LEN);
-        //printf("salida:  ");
-        //printCharArray(plain_data, MAX_DATA_LEN);
+        fread(encrypted_data, MAX_DATA_LEN, 1, encrypted_file);
     }
 
+    fflush(plain_file);
     fclose(plain_file);
     fclose(encrypted_file);
 }
@@ -104,8 +101,10 @@ void encryptFileToFile(gcry_cipher_hd_t hd, char *plain_filename, char *encrypte
         exit(1);
     }
 
-    while (fread(plain_data, MAX_DATA_LEN, 1, plain_file) != NULL) {
-
+    while (!feof(plain_file) && !ferror(plain_file)) { 
+    //while (fread(plain_data, MAX_DATA_LEN, 1, plain_file) != NULL) {
+        memcpy(plain_data, "                ", MAX_DATA_LEN);
+        fread(plain_data, MAX_DATA_LEN, 1, plain_file);
         err = gcry_cipher_encrypt(hd, encrypted_data, MAX_DATA_LEN, plain_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_encrypt failed: %s\n", gpg_strerror(err));
@@ -117,22 +116,10 @@ void encryptFileToFile(gcry_cipher_hd_t hd, char *plain_filename, char *encrypte
             printf("Tried to write %d blocks but written %zu bytes\n", blocks_to_write, elements_written);
             exit(3);
         }
-        fflush(encrypted_file);
         gcry_cipher_reset(hd);
-        //printf("entrada: ");
-        //printCharArray(plain_data, MAX_DATA_LEN);
-        //printf("salida:  ");
-        //printCharArray(encrypted_data, MAX_DATA_LEN);
-
-        //err = gcry_cipher_decrypt(hd, plain_data, MAX_DATA_LEN, encrypted_data, MAX_DATA_LEN);
-        //gcry_cipher_reset(hd);
-
-        //printf("entrada: ");
-        //printCharArray(encrypted_data, MAX_DATA_LEN);
-        //printf("salida:  ");
-        //printCharArray(plain_data, MAX_DATA_LEN);
     }
 
+    fflush(encrypted_file);
     fclose(encrypted_file);
     fclose(plain_file);
 }
@@ -148,8 +135,9 @@ void encryptDecryptTest(gcry_cipher_hd_t hd, char *plain_filename)
         exit(1);
     }
 
-    while (fread(plain_data, MAX_DATA_LEN, 1, plain_file) != NULL) {
-    
+    while (!feof(plain_file) && !ferror(plain_file)) {
+        memcpy(plain_data, "                ", MAX_DATA_LEN);
+        fread(plain_data, MAX_DATA_LEN, 1, plain_file); 
         err = gcry_cipher_encrypt(hd, encrypted_data, MAX_DATA_LEN, plain_data, MAX_DATA_LEN);
         if (err) {
             printf("grcy_cipher_encrypt failed: %s\n", gpg_strerror(err));
