@@ -9,28 +9,32 @@ Crypter is a static library that tries to fill the gap in the libgcrypt library 
 
 As a static library the makefile generates a libcrypter.a file located in the libcrypter folder to easily link to other projects.
 
-h2. Prerequisites:
+h2. Prerequisites
+
 This packages are required:
 * libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
 * libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
 
-h3. Build:
+h3. Build
+
 To build all: 
 
- make
+ $ make
 
 To build only the library:
 
- make libcrypter.a
+ $ make libcrypter.a
 
-h4. Bibliography:
+h4. Bibliography
+
 Some documentation you must read:
 * doc/gcrypt.pdf
 * doc/fips-fsm.pdf
 * doc/libgcrypt-modules.pdf
 * It is also important to read the examples located in the libgcrypt tests folder (see function check_one_cipher in basic.c file)
 
-h5. Internet resources:
+h5. Internet resources
+
 Free documentation available on internet:
 * C99 standard: http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
 
