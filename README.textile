@@ -12,8 +12,8 @@ As a static library the makefile generates a libcrypter.a file located in the li
 h2. Prerequisites
 
 This packages are required:
-* libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
-* libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
+* "libgpg-error": http://www.gnupg.org/download/index.en.html#libgpg-error
+* "libgcrypt": http://www.gnu.org/directory/security/libgcrypt.html
 
 h2. Build
 
@@ -36,5 +36,5 @@ Some documentation you must read:
 h2. Internet resources
 
 Free documentation available on internet:
-* C99 standard: http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
+* "C99 standard": http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
 
