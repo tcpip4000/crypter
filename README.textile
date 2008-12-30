@@ -11,7 +11,7 @@ As a static library the makefile generates a libcrypter.a file located in the li
 
 h2. Prerequisites
 
-This packages are required:
+This libraries have to be installed:
 * "libgpg-error":http://www.gnupg.org/download/index.en.html#libgpg-error
 * "libgcrypt":http://www.gnu.org/directory/security/libgcrypt.html
 
