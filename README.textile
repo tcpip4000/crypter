@@ -15,7 +15,7 @@ This packages are required:
 * libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
 * libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
 
-h3. Build
+h2. Build
 
 To build all: 
 
@@ -25,7 +25,7 @@ To build only the library:
 
  $ make libcrypter.a
 
-h4. Bibliography
+h2. Bibliography
 
 Some documentation you must read:
 * doc/gcrypt.pdf
@@ -33,7 +33,7 @@ Some documentation you must read:
 * doc/libgcrypt-modules.pdf
 * It is also important to read the examples located in the libgcrypt tests folder (see function check_one_cipher in basic.c file)
 
-h5. Internet resources
+h2. Internet resources
 
 Free documentation available on internet:
 * C99 standard: http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
