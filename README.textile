@@ -1,9 +1,9 @@
 h1. README
 
-ER Technology
-Author: Juan P Daza P
-Year: 2008
-Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt) and adds the possibility to write the manipulated data on files or standard output.
+* ER Technology
+* Author: Juan P Daza P
+* Year: 2008
+* Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt) and adds the possibility to write the manipulated data on files or standard output.
 
 Crypter is a static library that tries to fill the gap in the libgcrypt library adding some simple byte manipulation, allowing to print the data to standard output or write it to an specified output file.  Also is posible to read data from a encrypted file and then write the plain data to another file.
 
