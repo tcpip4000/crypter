@@ -1,4 +1,4 @@
-README
+h1. README
 
 ER Technology
 Author: Juan P Daza P
@@ -9,20 +9,22 @@ Crypter is a static library that tries to fill the gap in the libgcrypt library 
 
 As a static library the makefile generates a libcrypter.a file located in the libcrypter folder to easily link to other projects.
 
-Prerequisites:
-    libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
-    libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
+h2. Prerequisites:
+* libgpg-error: http://www.gnupg.org/download/index.en.html#libgpg-error
+* libgcrypt: http://www.gnu.org/directory/security/libgcrypt.html
 
-Build:
-    To build all: make
-    To build only the library: make libcrypter.a
+h3. Build:
+To build all: 
+ make
+To build only the library:
+ make libcrypter.a
 
-Bibliography:
-    doc/gcrypt.pdf
-    doc/fips-fsm.pdf
-    doc/libgcrypt-modules.pdf
-    It is also important to read the examples located in the libgcrypt tests folder (see function check_one_cipher in basic.c file)
+h4. Bibliography:
+* doc/gcrypt.pdf
+* doc/fips-fsm.pdf
+* doc/libgcrypt-modules.pdf
+* It is also important to read the examples located in the libgcrypt tests folder (see function check_one_cipher in basic.c file)
 
-Internet resources:
-    C99 standard: http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
+h5. Internet resources:
+* C99 standard: http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
 
