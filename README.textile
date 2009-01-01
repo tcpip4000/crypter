@@ -29,7 +29,7 @@ h2. Usage
 
 There are two executables: modalgen and modaler, the former encrypts data the latter decrypts.  Each one expects three parameters: input file, output file, key:
 
- $ modalgen files/data.xml files/output.erc mydatakey
+ $ ./modalgen files/data.xml files/output.erc mydatakey
 
 h2. Bibliography
 
