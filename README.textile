@@ -7,7 +7,7 @@ h1. README
 
 Crypter is a static library that tries to fill the gap in the libgcrypt library adding some simple byte manipulation, allowing to print the data to standard output or write it to an specified output file.  Also is posible to read data from a encrypted file and then write the plain data to another.
 
-As a static library the makefile generates a libcrypter.a file located in the libcrypter folder to easily link to other projects.
+As a static library the makefile generates a libcrypter.a file located in the src folder to easily link to other projects.
 
 h2. Prerequisites
 

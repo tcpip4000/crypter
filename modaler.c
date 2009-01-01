@@ -15,7 +15,8 @@ int main(int argc, const char *argv[])
     char *key;
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
-    char *filename, *filename2, *filename3;
+    char *filename, *filename2;
+    //char *filename3;
 
     //memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
     
