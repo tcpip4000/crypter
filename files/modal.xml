@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="antares" version="2.0" xml="0.1">
+    <module>
+        <name>autocall</name>
+        <allowance>true</allowance>
+        <period>
+            <from>2008-12-10</from>
+            <to>2009-12-10</to>
+        </period>
+    </module>
+    <module>
+        <name>spy</name>
+        <allowance>true</allowance>
+    </module>
+</project>
+
