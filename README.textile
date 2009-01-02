@@ -25,9 +25,9 @@ To build only the library:
 
  $ make libcrypter.a
 
-h2. Usage
+h2. Test
 
-There are two executables: modalgen and modaler, the former encrypts data the latter decrypts.  Each one expects three parameters: input file, output file, key:
+There are two executables locates in the tests: modalgen and modaler, the former encrypts data the latter decrypts.  Each one expects three parameters: input file, output file, key, for example:
 
  $ ./modalgen files/data.xml files/output.erc mydatakey
 
