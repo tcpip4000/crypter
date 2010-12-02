@@ -22,8 +22,8 @@ This libraries have to be installed in your system:
 h2. Build
 
 To build all: 
-@ $ ./configure@
-@ $ make@
+@$ ./configure@
+@$ make@
 
 h2. Test
 
@@ -44,5 +44,5 @@ Free documentation available on internet:
 * The libgcrypt reference manual: http://www.fifi.org/doc/libgcrypt-doc/reference.html
 * "C99 standard":http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
 * "An Introduction to GCC, Brian Gough":http://www.network-theory.co.uk/docs/gccintro/index.html
-* "Autotools Book": http://www.freesoftwaremagazine.com/books/autotools_a_guide_to_autoconf_automake_libtool
+* "Autotools Book":http://www.freesoftwaremagazine.com/books/autotools_a_guide_to_autoconf_automake_libtool
 
