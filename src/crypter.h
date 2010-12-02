@@ -8,8 +8,17 @@
 #ifndef CRYPTER_HEADER_H
 #define CRYPTER_HEADER_H
 
-#include <stdio.h>
-#include <gcrypt.h>
+#if HAVE_CONFIG_H
+# include <config.h> 
+#endif
+
+#if HAVE_STDIO_H
+# include <stdio.h>
+#endif
+
+#if HAVE_GCRYPT_H
+# include <gcrypt.h>
+#endif
 
 #define MAX_DATA_LEN 32
 

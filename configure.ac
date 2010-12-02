@@ -1,8 +1,8 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.66])
-AC_INIT([crypter], [0.2.7], [soporte@er-technology.net])
+AC_PREREQ([2.65])
+AC_INIT([crypter], [1.0.3], [soporte@er-technology.net])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/crypter.c])
 AC_CONFIG_HEADERS([config.h])
@@ -18,10 +18,29 @@ AC_SEARCH_LIBS([gpg_strerror], [gpg-error], [have_gpg_error=yes])
 have_gcrypt=no
 AC_SEARCH_LIBS([gcry_cipher_decrypt], [gcrypt], [have_gcrypt=yes])
 
-# Checks for header files.
+# Checks for headers
 AC_CHECK_HEADERS([stdlib.h string.h stdio.h])
 if test "${have_gcrypt}" = yes; then
-    AC_CHECK_HEADERS([gcrypt.h])
+    AC_CHECK_HEADERS([gcrypt.h], [], [have_gcrypt=no])
+fi
+
+# Checks for existence
+if test "x${have_gpg_error}" = xno; then
+  echo "------------------------------------------"
+  echo " The gpg_error library is required to     "
+  echo " build crypter. Stopping...               "
+  echo " Check 'config.log' for more information. "
+  echo "------------------------------------------"
+  (exit 1); exit 1;
+fi
+
+if test "x${have_gcrypt}" = xno; then
+  echo "------------------------------------------"
+  echo " The gcrypt library and header file is   "
+  echo " required to build crypter. Stopping...   "
+  echo " Check 'config.log' for more information. "
+  echo "------------------------------------------"
+  (exit 1); exit 1;
 fi
 
 # Checks for typedefs, structures, and compiler characteristics.
