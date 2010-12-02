@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([crypter], [1.0.3], [soporte@er-technology.net])
+AC_INIT([crypter], [1.0.4], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/crypter.c])
 AC_CONFIG_HEADERS([config.h])
@@ -21,13 +21,13 @@ AC_SEARCH_LIBS([gcry_cipher_decrypt], [gcrypt], [have_gcrypt=yes])
 
 # Checks for headers
 AC_CHECK_HEADERS([stdlib.h string.h stdio.h])
-if test "${have_gcrypt}" = yes; then
+if test "x${have_gcrypt}" = xyes; then
     AC_CHECK_HEADERS([gcrypt.h], [], [have_gcrypt=no])
 fi
 
 # Checks for existence
 if test "x${have_gpg_error}" = xno; then
-  echo "------------------------------------------"
+  echo "Error: -----------------------------------"
   echo " The gpg_error library is required to     "
   echo " build crypter. Stopping...               "
   echo " Check 'config.log' for more information. "
@@ -36,7 +36,7 @@ if test "x${have_gpg_error}" = xno; then
 fi
 
 if test "x${have_gcrypt}" = xno; then
-  echo "------------------------------------------"
+  echo "Error: -----------------------------------"
   echo " The gcrypt library and header file is   "
   echo " required to build crypter. Stopping...   "
   echo " Check 'config.log' for more information. "

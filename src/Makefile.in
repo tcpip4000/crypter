@@ -173,7 +173,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LIBRARIES = libcrypter.a
 libcrypter_a_SOURCES = crypter.c
-libcrypter_a_CPPFLAGS = -Wall -std=c99
+libcrypter_a_CPPFLAGS = -Wall 
 all: all-am
 
 .SUFFIXES:
