@@ -1,7 +1,7 @@
 h2. README
 
 * ER Technology Ltda.
-* Author: Juan P Daza P
+* Author: Juan P. Daza P.
 * Year: 2008
 * Last modification: 2010-12-02
 * Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt) and adds the possibility to write the manipulated data on files or standard output.
@@ -23,6 +23,7 @@ h2. Build
 
 To build all: 
 
+ $ ./configure
  $ make
 
 h2. Test
