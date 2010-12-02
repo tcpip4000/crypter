@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([crypter], [1.1.2], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
+AC_INIT([crypter], [1.1.3], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/crypter.c])
 AC_CONFIG_HEADERS([config.h])
@@ -20,7 +20,7 @@ have_gcrypt=no
 AC_SEARCH_LIBS([gcry_cipher_decrypt], [gcrypt], [have_gcrypt=yes])
 
 # Checks for headers
-AC_CHECK_HEADERS([stdlib.h string.h stdio.h])
+AC_CHECK_HEADERS([stdlib.h string.h stdio.h crypter.h])
 if test "x${have_gcrypt}" = xyes; then
     AC_CHECK_HEADERS([gcrypt.h], [], [have_gcrypt=no])
 fi

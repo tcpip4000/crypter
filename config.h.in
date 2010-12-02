@@ -1,5 +1,8 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Define to 1 if you have the <crypter.h> header file. */
+#undef HAVE_CRYPTER_H
+
 /* Define to 1 if you have the <gcrypt.h> header file. */
 #undef HAVE_GCRYPT_H
 
