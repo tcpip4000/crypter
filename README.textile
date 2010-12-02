@@ -1,6 +1,6 @@
 h2. README
 
-* ER Technology
+* ER Technology Ltda.
 * Author: Juan P Daza P
 * Year: 2008
 * Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt) and adds the possibility to write the manipulated data on files or standard output.
@@ -10,11 +10,11 @@ Crypter is a static library that tries to fill the gap in the libgcrypt library 
 As a static library the makefile generates a libcrypter.a file located in the src folder to easily link to other projects.
 
 h2. Licence
-This software is licenced under the GPL version 2.
+This software is licenced under the GPL version 3.
 
 h2. Prerequisites
 
-This libraries have to be installed:
+This libraries have to be installed in your system:
 * "libgpg-error":http://www.gnupg.org/download/index.en.html#libgpg-error
 * "libgcrypt":http://www.gnu.org/directory/security/libgcrypt.html
 
@@ -23,10 +23,6 @@ h2. Build
 To build all: 
 
  $ make
-
-To build only the library:
-
- $ make libcrypter.a
 
 h2. Test
 
@@ -47,4 +43,5 @@ h2. Internet resources
 Free documentation available on internet:
 * "C99 standard":http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
 * "An Introduction to GCC, Brian Gough":http://www.network-theory.co.uk/docs/gccintro/index.html
+* "Autotools Book: http://www.freesoftwaremagazine.com/books/autotools_a_guide_to_autoconf_automake_libtool
 
