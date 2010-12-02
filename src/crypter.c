@@ -46,7 +46,7 @@ void decryptFile(gcry_cipher_hd_t hd, char *filename)
     fclose(encrypted_file);
 }
 
-void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plain_filename)
+void decryptFileToFile(gcry_cipher_hd_t hd, const char *encrypted_filename, const char *plain_filename)
 {
     FILE *plain_file, *encrypted_file;
     unsigned char encrypted_data[MAX_DATA_LEN], plain_data[MAX_DATA_LEN];
@@ -85,7 +85,7 @@ void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plai
     fclose(encrypted_file);
 }
 
-void encryptFileToFile(gcry_cipher_hd_t hd, char *plain_filename, char *encrypted_filename) 
+void encryptFileToFile(gcry_cipher_hd_t hd, const char *plain_filename, const char *encrypted_filename) 
 {
     FILE *plain_file, *encrypted_file;
     unsigned char encrypted_data[MAX_DATA_LEN], plain_data[MAX_DATA_LEN];

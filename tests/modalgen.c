@@ -11,10 +11,11 @@ int main(int argc, const char *argv[])
 {
     const char *libgcrypt_version = gcry_check_version(GCRYPT_VERSION);
     gcry_error_t err = 0;
-    char *key;
+    const char *key;
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
-    char *filename, *filename2;
+    const char *filename;
+    const char *filename2;
     
     if (argc != 4) {
         printf("Wrong parameter quantity\n");

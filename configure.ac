@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([crypter], [1.0.4], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
+AC_INIT([crypter], [1.1.0], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
 AM_INIT_AUTOMAKE
 AC_CONFIG_SRCDIR([src/crypter.c])
 AC_CONFIG_HEADERS([config.h])

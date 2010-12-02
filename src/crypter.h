@@ -24,8 +24,8 @@
 
 void printCharArray(unsigned char *array, int array_length);
 void decryptFile(gcry_cipher_hd_t handler, char *filename);
-void decryptFileToFile(gcry_cipher_hd_t hd, char *encrypted_filename, char *plain_filename);
-void encryptFileToFile(gcry_cipher_hd_t handler, char *plain_filename, char *encrypted_filename);
+void decryptFileToFile(gcry_cipher_hd_t hd, const char *encrypted_filename, const char *plain_filename);
+void encryptFileToFile(gcry_cipher_hd_t handler, const char *plain_filename, const char *encrypted_filename);
 void encryptDecryptTest(gcry_cipher_hd_t handler, char *plain_filename);
 void fillCharVectorWithSpaces(unsigned char vector[], int len); 
 

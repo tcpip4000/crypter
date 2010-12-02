@@ -12,14 +12,12 @@ int main(int argc, const char *argv[])
     const char *libgcrypt_version = gcry_check_version(GCRYPT_VERSION);
     gcry_error_t err = 0;
     //char key[32];
-    char *key;
+    const char *key;
     int keylen;
     int algo = GCRY_CIPHER_SERPENT128;
-    char *filename, *filename2;
-    //char *filename3;
+    const char *filename;
+    const char *filename2;
 
-    //memcpy(key, "0123456789abcdef.,;/[]{}-=ABCDEF", 32);
-    
     if (argc != 4) {
         printf("Wrong parameter quantity\n");
         exit(1);
