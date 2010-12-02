@@ -9,3 +9,9 @@ files/modal_en.erc
 files/modal_plain.erc
 scripts/ChangeLog
 autom4te.cache
+.deps
+Makefile
+config.h
+config.log
+config.status
+stamp-h1
