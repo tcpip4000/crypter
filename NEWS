@@ -1,8 +1,5 @@
-Version 1.1.0:
-    Fixed a warning about using const pointers incorrectly
+2010-12:
+    Introduced compilation using autotools
 
-Version 1.0.0:
-    Uses autotools in compilation process
-
-Version 0.X.X:
+2009-12:
     Implements the basic functionality
