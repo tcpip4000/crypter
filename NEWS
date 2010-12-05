@@ -1,5 +1,5 @@
 2010-12:
-    Introduced compilation using autotools
+    Introduced compilation using autotools, added build instructions for FreeBSD and NetBSD.
 
 2009-12:
     Implements the basic functionality
