@@ -21,8 +21,16 @@ This libraries have to be installed in your system:
 
 h2. Build
 
-To build all: 
+Linux:
 @$ ./configure@
+@$ make@
+
+FreeBSD:
+@$ ./configure CFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib@
+@$ make@
+
+NetBSD:
+@$ ./configure CFLAGS=-I/usr/pkg/include LDFLAGS="-L/usr/pkg/lib -Wl,-R/usr/pkg/lib"@
 @$ make@
 
 h2. Test
