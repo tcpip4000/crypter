@@ -2,11 +2,11 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.65])
-AC_INIT([crypter], [1.2.0], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
+AC_INIT([crypter], [1.2.1], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
 AM_INIT_AUTOMAKE
 AC_CONFIG_MACRO_DIR([m4])
-#LT_PREREQ([2.2])
-#LT_INIT([dlopen])
+LT_PREREQ([2.2])
+LT_INIT([dlopen])
 AC_CONFIG_SRCDIR([src/modaler.c])
 AC_CONFIG_HEADERS([config.h])
 
