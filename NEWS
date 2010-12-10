@@ -1,4 +1,7 @@
 2010-12:
+    Reordered source code. Libcrypter compiled via libtool.
+
+2010-10:
     Introduced compilation using autotools, added build instructions for FreeBSD and NetBSD.
 
 2009-12:

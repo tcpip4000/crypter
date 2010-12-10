@@ -1,4 +1,4 @@
-lib_LIBRARIES = libcrypter.a
-libcrypter_a_SOURCES = crypter.c crypter.h
-libcrypter_a_CPPFLAGS = -Wall 
-noinst_LIBRARIES = libcrypter.a
+lib_LTLIBRARIES = libcrypter.la
+libcrypter_la_SOURCES = crypter.c crypter.h
+libcrypter_la_CPPFLAGS = -Wall 
+#noinst_LIBRARIES = libcrypter.a
