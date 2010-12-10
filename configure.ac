@@ -4,7 +4,9 @@
 AC_PREREQ([2.65])
 AC_INIT([crypter], [1.1.4], [soporte@er-technology.net], , [http://github.com/tcpip4000/crypter])
 AM_INIT_AUTOMAKE
-AC_CONFIG_SRCDIR([src/crypter.c])
+#LT_PREREQ([2.2])
+#LT_INIT([dlopen])
+AC_CONFIG_SRCDIR([src/modaler.c])
 AC_CONFIG_HEADERS([config.h])
 
 # Checks for programs.
@@ -51,7 +53,7 @@ AC_TYPE_SIZE_T
 AC_CHECK_FUNCS([memset])
 
 AC_CONFIG_FILES([Makefile
-                 src/Makefile
-                 tests/Makefile])
+                 libcrypter/Makefile
+                 src/Makefile])
 
 AC_OUTPUT

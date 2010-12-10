@@ -32,6 +32,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
+bin_PROGRAMS = modaler$(EXEEXT) modalgen$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -42,35 +43,14 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
-am__install_max = 40
-am__nobase_strip_setup = \
-  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
-am__nobase_strip = \
-  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
-am__nobase_list = $(am__nobase_strip_setup); \
-  for p in $$list; do echo "$$p $$p"; done | \
-  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
-  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
-    if (++n[$$2] == $(am__install_max)) \
-      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
-    END { for (dir in files) print dir, files[dir] }'
-am__base_list = \
-  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
-  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__installdirs = "$(DESTDIR)$(libdir)"
-LIBRARIES = $(lib_LIBRARIES) $(noinst_LIBRARIES)
-AR = ar
-ARFLAGS = cru
-libcrypter_a_AR = $(AR) $(ARFLAGS)
-libcrypter_a_LIBADD =
-am_libcrypter_a_OBJECTS = libcrypter_a-crypter.$(OBJEXT)
-libcrypter_a_OBJECTS = $(am_libcrypter_a_OBJECTS)
+am__installdirs = "$(DESTDIR)$(bindir)"
+PROGRAMS = $(bin_PROGRAMS)
+am_modaler_OBJECTS = modaler-modaler.$(OBJEXT)
+modaler_OBJECTS = $(am_modaler_OBJECTS)
+modaler_DEPENDENCIES = $(top_srcdir)/libcrypter/libcrypter.a
+am_modalgen_OBJECTS = modalgen-modalgen.$(OBJEXT)
+modalgen_OBJECTS = $(am_modalgen_OBJECTS)
+modalgen_DEPENDENCIES = $(top_srcdir)/libcrypter/libcrypter.a
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -79,8 +59,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(libcrypter_a_SOURCES)
-DIST_SOURCES = $(libcrypter_a_SOURCES)
+SOURCES = $(modaler_SOURCES) $(modalgen_SOURCES)
+DIST_SOURCES = $(modaler_SOURCES) $(modalgen_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -171,12 +151,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-
-#includedir=$(exec_prefix)/lib
-lib_LIBRARIES = libcrypter.a
-libcrypter_a_SOURCES = crypter.c crypter.h
-libcrypter_a_CPPFLAGS = -Wall 
-noinst_LIBRARIES = libcrypter.a
+modaler_SOURCES = modaler.c
+modaler_CPPFLAGS = -Wall -I$(top_srcdir)/libcrypter
+modaler_LDADD = $(top_srcdir)/libcrypter/libcrypter.a
+modalgen_SOURCES = modalgen.c
+modalgen_CPPFLAGS = -Wall -I$(top_srcdir)/libcrypter
+modalgen_LDADD = $(top_srcdir)/libcrypter/libcrypter.a
 all: all-am
 
 .SUFFIXES:
@@ -211,45 +191,49 @@ $(top_srcdir)/configure:  $(am__configure_deps)
 $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
-install-libLIBRARIES: $(lib_LIBRARIES)
+install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
-	test -z "$(libdir)" || $(MKDIR_P) "$(DESTDIR)$(libdir)"
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(INSTALL_DATA) $$list2 '$(DESTDIR)$(libdir)'"; \
-	  $(INSTALL_DATA) $$list2 "$(DESTDIR)$(libdir)" || exit $$?; }
-	@$(POST_INSTALL)
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
-	for p in $$list; do \
-	  if test -f $$p; then \
-	    $(am__strip_dir) \
-	    echo " ( cd '$(DESTDIR)$(libdir)' && $(RANLIB) $$f )"; \
-	    ( cd "$(DESTDIR)$(libdir)" && $(RANLIB) $$f ) || exit $$?; \
-	  else :; fi; \
-	done
+	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
+	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	for p in $$list; do echo "$$p $$p"; done | \
+	sed 's/$(EXEEXT)$$//' | \
+	while read p p1; do if test -f $$p; \
+	  then echo "$$p"; echo "$$p"; else :; fi; \
+	done | \
+	sed -e 'p;s,.*/,,;n;h' -e 's|.*|.|' \
+	    -e 'p;x;s,.*/,,;s/$(EXEEXT)$$//;$(transform);s/$$/$(EXEEXT)/' | \
+	sed 'N;N;N;s,\n, ,g' | \
+	$(AWK) 'BEGIN { files["."] = ""; dirs["."] = 1 } \
+	  { d=$$3; if (dirs[d] != 1) { print "d", d; dirs[d] = 1 } \
+	    if ($$2 == $$4) files[d] = files[d] " " $$1; \
+	    else { print "f", $$3 "/" $$4, $$1; } } \
+	  END { for (d in files) print "f", d, files[d] }' | \
+	while read type dir files; do \
+	    if test "$$dir" = .; then dir=; else dir=/$$dir; fi; \
+	    test -z "$$files" || { \
+	      echo " $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files '$(DESTDIR)$(bindir)$$dir'"; \
+	      $(INSTALL_PROGRAM_ENV) $(INSTALL_PROGRAM) $$files "$(DESTDIR)$(bindir)$$dir" || exit $$?; \
+	    } \
+	; done
 
-uninstall-libLIBRARIES:
+uninstall-binPROGRAMS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(lib_LIBRARIES)'; test -n "$(libdir)" || list=; \
-	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	test -n "$$files" || exit 0; \
-	echo " ( cd '$(DESTDIR)$(libdir)' && rm -f "$$files" )"; \
-	cd "$(DESTDIR)$(libdir)" && rm -f $$files
+	@list='$(bin_PROGRAMS)'; test -n "$(bindir)" || list=; \
+	files=`for p in $$list; do echo "$$p"; done | \
+	  sed -e 'h;s,^.*/,,;s/$(EXEEXT)$$//;$(transform)' \
+	      -e 's/$$/$(EXEEXT)/' `; \
+	test -n "$$list" || exit 0; \
+	echo " ( cd '$(DESTDIR)$(bindir)' && rm -f" $$files ")"; \
+	cd "$(DESTDIR)$(bindir)" && rm -f $$files
 
-clean-libLIBRARIES:
-	-test -z "$(lib_LIBRARIES)" || rm -f $(lib_LIBRARIES)
-
-clean-noinstLIBRARIES:
-	-test -z "$(noinst_LIBRARIES)" || rm -f $(noinst_LIBRARIES)
-libcrypter.a: $(libcrypter_a_OBJECTS) $(libcrypter_a_DEPENDENCIES) 
-	-rm -f libcrypter.a
-	$(libcrypter_a_AR) libcrypter.a $(libcrypter_a_OBJECTS) $(libcrypter_a_LIBADD)
-	$(RANLIB) libcrypter.a
+clean-binPROGRAMS:
+	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+modaler$(EXEEXT): $(modaler_OBJECTS) $(modaler_DEPENDENCIES) 
+	@rm -f modaler$(EXEEXT)
+	$(LINK) $(modaler_OBJECTS) $(modaler_LDADD) $(LIBS)
+modalgen$(EXEEXT): $(modalgen_OBJECTS) $(modalgen_DEPENDENCIES) 
+	@rm -f modalgen$(EXEEXT)
+	$(LINK) $(modalgen_OBJECTS) $(modalgen_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -257,7 +241,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libcrypter_a-crypter.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modaler-modaler.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/modalgen-modalgen.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -273,19 +258,33 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
-libcrypter_a-crypter.o: crypter.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcrypter_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libcrypter_a-crypter.o -MD -MP -MF $(DEPDIR)/libcrypter_a-crypter.Tpo -c -o libcrypter_a-crypter.o `test -f 'crypter.c' || echo '$(srcdir)/'`crypter.c
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libcrypter_a-crypter.Tpo $(DEPDIR)/libcrypter_a-crypter.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypter.c' object='libcrypter_a-crypter.o' libtool=no @AMDEPBACKSLASH@
+modaler-modaler.o: modaler.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modaler_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT modaler-modaler.o -MD -MP -MF $(DEPDIR)/modaler-modaler.Tpo -c -o modaler-modaler.o `test -f 'modaler.c' || echo '$(srcdir)/'`modaler.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/modaler-modaler.Tpo $(DEPDIR)/modaler-modaler.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='modaler.c' object='modaler-modaler.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcrypter_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libcrypter_a-crypter.o `test -f 'crypter.c' || echo '$(srcdir)/'`crypter.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modaler_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modaler-modaler.o `test -f 'modaler.c' || echo '$(srcdir)/'`modaler.c
 
-libcrypter_a-crypter.obj: crypter.c
-@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcrypter_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT libcrypter_a-crypter.obj -MD -MP -MF $(DEPDIR)/libcrypter_a-crypter.Tpo -c -o libcrypter_a-crypter.obj `if test -f 'crypter.c'; then $(CYGPATH_W) 'crypter.c'; else $(CYGPATH_W) '$(srcdir)/crypter.c'; fi`
-@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/libcrypter_a-crypter.Tpo $(DEPDIR)/libcrypter_a-crypter.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='crypter.c' object='libcrypter_a-crypter.obj' libtool=no @AMDEPBACKSLASH@
+modaler-modaler.obj: modaler.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modaler_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT modaler-modaler.obj -MD -MP -MF $(DEPDIR)/modaler-modaler.Tpo -c -o modaler-modaler.obj `if test -f 'modaler.c'; then $(CYGPATH_W) 'modaler.c'; else $(CYGPATH_W) '$(srcdir)/modaler.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/modaler-modaler.Tpo $(DEPDIR)/modaler-modaler.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='modaler.c' object='modaler-modaler.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(libcrypter_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o libcrypter_a-crypter.obj `if test -f 'crypter.c'; then $(CYGPATH_W) 'crypter.c'; else $(CYGPATH_W) '$(srcdir)/crypter.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modaler_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modaler-modaler.obj `if test -f 'modaler.c'; then $(CYGPATH_W) 'modaler.c'; else $(CYGPATH_W) '$(srcdir)/modaler.c'; fi`
+
+modalgen-modalgen.o: modalgen.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modalgen_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT modalgen-modalgen.o -MD -MP -MF $(DEPDIR)/modalgen-modalgen.Tpo -c -o modalgen-modalgen.o `test -f 'modalgen.c' || echo '$(srcdir)/'`modalgen.c
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/modalgen-modalgen.Tpo $(DEPDIR)/modalgen-modalgen.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='modalgen.c' object='modalgen-modalgen.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modalgen_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modalgen-modalgen.o `test -f 'modalgen.c' || echo '$(srcdir)/'`modalgen.c
+
+modalgen-modalgen.obj: modalgen.c
+@am__fastdepCC_TRUE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modalgen_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT modalgen-modalgen.obj -MD -MP -MF $(DEPDIR)/modalgen-modalgen.Tpo -c -o modalgen-modalgen.obj `if test -f 'modalgen.c'; then $(CYGPATH_W) 'modalgen.c'; else $(CYGPATH_W) '$(srcdir)/modalgen.c'; fi`
+@am__fastdepCC_TRUE@	$(am__mv) $(DEPDIR)/modalgen-modalgen.Tpo $(DEPDIR)/modalgen-modalgen.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='modalgen.c' object='modalgen-modalgen.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(modalgen_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o modalgen-modalgen.obj `if test -f 'modalgen.c'; then $(CYGPATH_W) 'modalgen.c'; else $(CYGPATH_W) '$(srcdir)/modalgen.c'; fi`
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -371,9 +370,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LIBRARIES)
+all-am: Makefile $(PROGRAMS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)"; do \
+	for dir in "$(DESTDIR)$(bindir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -403,8 +402,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libLIBRARIES clean-noinstLIBRARIES \
-	mostlyclean-am
+clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -430,7 +428,7 @@ install-dvi: install-dvi-am
 
 install-dvi-am:
 
-install-exec-am: install-libLIBRARIES
+install-exec-am: install-binPROGRAMS
 
 install-html: install-html-am
 
@@ -469,22 +467,22 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libLIBRARIES
+uninstall-am: uninstall-binPROGRAMS
 
 .MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libLIBRARIES clean-noinstLIBRARIES ctags distclean \
-	distclean-compile distclean-generic distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
+.PHONY: CTAGS GTAGS all all-am check check-am clean clean-binPROGRAMS \
+	clean-generic ctags distclean distclean-compile \
+	distclean-generic distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-binPROGRAMS \
 	install-data install-data-am install-dvi install-dvi-am \
 	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-libLIBRARIES install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-libLIBRARIES
+	install-info install-info-am install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am uninstall-binPROGRAMS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
