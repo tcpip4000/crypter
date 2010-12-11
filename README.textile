@@ -30,14 +30,14 @@ FreeBSD:
 @$ make@
 
 NetBSD:
-@$ ./configure CFLAGS=-I/usr/pkg/include LDFLAGS="-L/usr/pkg/lib -Wl,-R/usr/pkg/lib"@
+@$ ./configure CFLAGS=-I/usr/pkg/include LDFLAGS=-L/usr/pkg/lib@
 @$ make@
 
 h2. Test
 
-There are two executables locates in the tests: modalgen and modaler, the former encrypts data the latter decrypts.  Each one expects three parameters: input file, output file, key, for example:
+There are two executables locates in the src directory: modalgen and modaler, the former encrypts data the latter decrypts.  Each one expects three parameters: input file, output file and key, for example:
 
- $ ./modalgen files/data.xml files/output.erc mydatakey
+ $ ./modalgen files/data.xml files/output.enc mydatakey
 
 h2. Bibliography
 
