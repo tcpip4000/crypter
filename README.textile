@@ -21,7 +21,7 @@ This libraries have to be installed in your system:
 
 h2. Build
 
-Linux:
+Linux or OpenIndiana:
 @$ ./configure@
 @$ make@
 
