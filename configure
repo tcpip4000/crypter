@@ -10893,7 +10893,7 @@ fi
 
 done
 
-if "x${have_gcrypt}" = xyes; then :
+if test "x${have_gcrypt}" = xyes; then :
   for ac_header in gcrypt.h
 do :
   ac_fn_c_check_header_mongrel "$LINENO" "gcrypt.h" "ac_cv_header_gcrypt_h" "$ac_includes_default"
