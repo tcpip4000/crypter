@@ -1,5 +1,8 @@
+2011-08:
+    Changed license to GPl v2
+
 2010-12:
-    Reordered source code. Libcrypter compiled via libtool.
+    reordered source code. libcrypter compiled via libtool.
 
 2010-10:
     Introduced compilation using autotools, added build instructions for FreeBSD and NetBSD.
