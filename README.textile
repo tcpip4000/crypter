@@ -3,10 +3,10 @@ h2. README
 * ER Technology Ltda.
 * Author: Juan P. Daza P.
 * Year: 2008
-* Last modification: 2010-12-05
+* Last modification: 2011-08-04
 * Purpose: This program encrypts and decrypts data using generic well known algorithms (trought libgcrypt) and adds the possibility to write the manipulated data on files or standard output.
 
-Crypter is a static library that tries to fill the gap in the libgcrypt library adding some simple byte manipulation, allowing to print the data to standard output or write it to an specified output file.  Also is posible to read data from a encrypted file and then write the plain data to another.
+Crypter is a static library that uses the libgcrypt library for some byte encryption. Allows to print the data to standard output or write it to an specified output file.  Also is posible to read data from a encrypted file and then write the plain data to another.
 
 As a static library the makefile generates a libcrypter.a file located in the src folder to easily link to other projects.
 
@@ -54,4 +54,6 @@ Free documentation available on internet:
 * "C99 standard":http://www.open-std.org/JTC1/SC22/WG14/www/docs/n1336.pdf (check the folder for any update of this document)
 * "An Introduction to GCC, Brian Gough":http://www.network-theory.co.uk/docs/gccintro/index.html
 * "Autotools Book":http://www.freesoftwaremagazine.com/books/autotools_a_guide_to_autoconf_automake_libtool
+* "Autotools Mythbuster":http://www.flameeyes.eu/autotools-mythbuster/index.html
+* "Autoconf manual":http://www.gnu.org/software/hello/manual/autoconf/index.html
 
