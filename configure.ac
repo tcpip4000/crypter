@@ -24,7 +24,7 @@ AC_SEARCH_LIBS([gcry_cipher_decrypt], [gcrypt], [have_gcrypt=yes])
 # Checks for headers
 AC_CHECK_HEADERS([stdlib.h string.h stdio.h crypter.h])
 AS_IF([test "x${have_gcrypt}" = xyes],
-    AC_CHECK_HEADERS([gcrypt.h], [], [have_gcrypt=no]))
+    [AC_CHECK_HEADERS([gcrypt.h], [], [have_gcrypt=no])])
 
 # Checks for existence
 if test "x${have_gpg_error}" = xno; then
