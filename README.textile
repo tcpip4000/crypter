@@ -25,7 +25,7 @@ Linux or OpenIndiana:
 @$ ./configure@
 @$ make@
 
-FreeBSD:
+FreeBSD and OpenBSD:
 @$ ./configure CFLAGS=-I/usr/local/include LDFLAGS=-L/usr/local/lib@
 @$ make@
 
